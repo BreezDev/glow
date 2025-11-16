@@ -3,133 +3,140 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Glow Atelier | Farah Bazzi, NP &amp; Malak Sabbagh, NP</title>
+    <title>Glow Atelier | Bold injectables, private booking</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
   <body>
-    <header class="hero">
-      <div class="hero__aura"></div>
-      <div class="hero__content">
-        <p class="eyebrow">Glow Atelier • Dearborn, Michigan</p>
-        <h1>Modern injectables guided by nurse practitioners</h1>
-        <p>
-          Farah Bazzi, NP and Malak Sabbagh, NP compose luminous, confident features with balanced filler,
-          wrinkle-softening therapies, and curated skin revivals. Every reservation, deposit, and confirmation
-          happens privately on this page so guests never leave the Glow Atelier environment.
-        </p>
-        <div class="hero__signatures">
-          <div>
-            <span class="signature">Farah Bazzi</span>
-            <p>Nurse Practitioner • Facial balancing</p>
-          </div>
-          <div>
-            <span class="signature">Malak Sabbagh</span>
-            <p>Nurse Practitioner • Subtle refinements</p>
-          </div>
-        </div>
-        <div class="cta-row">
-          <a class="btn btn--primary" href="#booking">Reserve online</a>
-          <a class="btn btn--ghost" href="tel:+13138883057">Call (313) 888-3057</a>
-        </div>
-        <div class="hero__details">
-          <p>4700 Greenfield Rd Suite 2F • Dearborn, MI 48126</p>
-          <p>Private suites • Concierge booking • Same-page payment</p>
-        </div>
+    <div class="background-texture"></div>
+    <nav class="top-nav">
+      <div class="logo">Glow Atelier</div>
+      <div class="nav-links">
+        <a href="#profile">Client profile</a>
+        <a href="#services">Treatments</a>
+        <a href="#providers">Team</a>
+        <a href="#booking" class="pill">Book now</a>
       </div>
-      <div class="hero__card">
-        <div class="hero__card-inner">
-          <p class="eyebrow">Integrated care</p>
-          <h3>Book • Confirm • Glow</h3>
-          <ul>
-            <li>Secure deposit without redirecting</li>
-            <li>Automatic confirmations + reminders</li>
-            <li>Personalized aftercare delivered digitally</li>
-          </ul>
-          <p class="card-note">All communication is handled through our encrypted concierge channel.</p>
+    </nav>
+
+    <header class="hero">
+      <div class="hero__text">
+        <p class="badge">Dearborn, Michigan · Nurse practitioner owned</p>
+        <h1>
+          A fearless injectable studio built so clients can sign up, pay deposits, and confirm visits without
+          leaving.
+        </h1>
+        <p>
+          Farah Bazzi, NP and Malak Sabbagh, NP reimagined Glow Atelier as a digital-first experience. Everything from
+          your profile to concierge chat, booking, payment, and aftercare runs on this single page.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#profile">Create your client profile</a>
+          <a class="btn btn--outline" href="#booking">Reserve appointment</a>
+        </div>
+        <ul class="hero__stats">
+          <li><span>14</span> signature injectable blueprints</li>
+          <li><span>4</span> minute deposit capture</li>
+          <li><span>0</span> third-party redirects</li>
+        </ul>
+      </div>
+      <div class="hero__panel">
+        <div class="panel__orbit"></div>
+        <div class="hero__panel-content">
+          <p class="eyebrow">Immersive flow</p>
+          <h3>Sign up → Choose ritual → Secure deposit</h3>
+          <ol>
+            <li>Complete the client profile for secure storage.</li>
+            <li>Browse the ritual library and tap the booking step.</li>
+            <li>Pay the ${{ deposit_amount }} deposit via Square without leaving.</li>
+            <li>Instant confirmation and prep slides into your inbox.</li>
+          </ol>
+          <p class="microcopy">Encrypted, nurse-led, and designed for decisive guests.</p>
         </div>
       </div>
     </header>
 
     <main>
-      <section class="section">
-        <div class="section__header">
-          <p class="eyebrow">Experience the atelier</p>
-          <h2>Every detail is orchestrated in-house</h2>
+      <section id="profile" class="section profile">
+        <div>
+          <p class="eyebrow">Start here</p>
+          <h2>Build your Glow client profile</h2>
           <p>
-            From intake to aftercare, Glow Atelier keeps your information within our private system. Guests can
-            request dates, place deposits, and receive confirmations in one sitting, and discreet inbox updates
-            arrive instantly once your booking is accepted.
+            Tell us your goals, preferred communication channel, and the rituals you're eyeing. The profile locks in
+            concierge messaging, intake paperwork, and same-page booking.
           </p>
+          <ul class="checklist">
+            <li>Secure contact + goals intake</li>
+            <li>Fast-track to Square deposit</li>
+            <li>Custom reminders + aftercare</li>
+          </ul>
         </div>
-        <div class="experience-grid">
-          <article>
-            <h3>Concierge booking</h3>
-            <p>Choose your date and provider; our team aligns availability and sends luxe reminders immediately.</p>
-          </article>
-          <article>
-            <h3>Seamless payments</h3>
-            <p>Deposits process with bank-grade encryption directly on this page&mdash;no outside portals, ever.</p>
-          </article>
-          <article>
-            <h3>Automatic communication</h3>
-            <p>Consent packets, preparation guidance, and aftercare touchpoints land in your inbox moments later.</p>
-          </article>
-        </div>
+        <form id="profile-form" class="card glass">
+          <label for="profile-name">Full name</label>
+          <input id="profile-name" name="profile-name" type="text" placeholder="Your name" required />
+          <label for="profile-email">Email</label>
+          <input id="profile-email" name="profile-email" type="email" placeholder="you@example.com" required />
+          <label for="profile-phone">Phone</label>
+          <input id="profile-phone" name="profile-phone" type="tel" placeholder="(313) 555-1234" required />
+          <label for="profile-goal">Treatment focus</label>
+          <textarea id="profile-goal" name="profile-goal" placeholder="Lip balance, tox refresh, PRP..." rows="3"></textarea>
+          <button class="btn btn--primary" type="submit">Save profile</button>
+          <p id="profile-success" class="microcopy" aria-live="polite"></p>
+        </form>
       </section>
 
-      <section id="treatments" class="section">
+      <section id="services" class="section services">
         <div class="section__header">
-          <p class="eyebrow">Treatment offerings</p>
-          <h2>Crafted to suit your canvas</h2>
-          <p>Explore a curated menu of injectables, PRP rituals, and resurfacing. Each visit is tailored to you.</p>
+          <p class="eyebrow">Ritual index</p>
+          <h2>Choose a lane and lock it in</h2>
+          <p>Injectables, PRP rituals, and skin lab innovations are displayed below. Tap to explore before booking.</p>
         </div>
-        <div class="tabs">
-          <button class="tab is-active" data-target="injectables">Injectables</button>
-          <button class="tab" data-target="prp">PRP Rituals</button>
-          <button class="tab" data-target="peels">Skin Lab</button>
+        <div class="service-tabs">
+          <button class="service-tab is-active" data-panel="injectables">Injectables</button>
+          <button class="service-tab" data-panel="prp">PRP Rituals</button>
+          <button class="service-tab" data-panel="peels">Skin Lab</button>
         </div>
-        <div class="grid" id="injectables">
+        <div class="service-grid" id="panel-injectables">
           {% for item in injectables %}
-          <article class="card">
+          <article class="service-card">
             <div>
-              <p class="card__title">{{ item.name }}</p>
-              <p class="card__subtitle">{{ item.details }}</p>
+              <h3>{{ item.name }}</h3>
+              <p>{{ item.details }}</p>
             </div>
-            <div class="card__meta">
+            <div class="service-meta">
               <span>{{ item.price }}</span>
               <span>{{ item.duration }}</span>
             </div>
           </article>
           {% endfor %}
         </div>
-        <div class="grid is-hidden" id="prp">
+        <div class="service-grid is-hidden" id="panel-prp">
           {% for item in prp %}
-          <article class="card">
+          <article class="service-card">
             <div>
-              <p class="card__title">{{ item.name }}</p>
-              <p class="card__subtitle">{{ item.details }}</p>
+              <h3>{{ item.name }}</h3>
+              <p>{{ item.details }}</p>
             </div>
-            <div class="card__meta">
+            <div class="service-meta">
               <span>{{ item.price }}</span>
               <span>{{ item.duration }}</span>
             </div>
           </article>
           {% endfor %}
         </div>
-        <div class="grid is-hidden" id="peels">
+        <div class="service-grid is-hidden" id="panel-peels">
           {% for item in peels %}
-          <article class="card">
+          <article class="service-card">
             <div>
-              <p class="card__title">{{ item.name }}</p>
-              <p class="card__subtitle">{{ item.details }}</p>
+              <h3>{{ item.name }}</h3>
+              <p>{{ item.details }}</p>
             </div>
-            <div class="card__meta">
+            <div class="service-meta">
               <span>{{ item.price }}</span>
               <span>{{ item.duration }}</span>
             </div>
@@ -138,13 +145,42 @@
         </div>
       </section>
 
-      <section id="providers" class="panel panel--duo">
+      <section class="section flow">
+        <div class="section__header">
+          <p class="eyebrow">Always-on concierge</p>
+          <h2>Everything you need happens on one screen</h2>
+        </div>
+        <div class="flow-grid">
+          <article>
+            <span>01</span>
+            <h3>Profile</h3>
+            <p>Lock your preferences and share references using the form above.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Select ritual</h3>
+            <p>Compare pricing and timing in the ritual index; no PDFs or downloads.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Book + deposit</h3>
+            <p>Use the Square card element below to secure your seat instantly.</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>Confirm</h3>
+            <p>Automated email + SMS confirm your itinerary along with aftercare.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="providers" class="section team">
         <article>
           <p class="eyebrow">Clinical Director</p>
           <h2>Farah Bazzi, NP</h2>
           <p>
-            Farah is renowned for intentional facial balancing, harmonizing structure and softness with precise
-            filler placement, bio-stimulators, and hyper-personalized dosing.
+            Fearless facial balancing, bio-stimulators, and sculpted contours executed with a modern point of view. Farah
+            leads clinical decisions, intake review, and post-visit analysis.
           </p>
           <ul>
             <li>Advanced contouring + midface restoration</li>
@@ -156,8 +192,8 @@
           <p class="eyebrow">Aesthetic Partner</p>
           <h2>Malak Sabbagh, NP</h2>
           <p>
-            Malak delivers effortless refinement&mdash;from velvet lip stories to PRP revivals&mdash;with a calm,
-            detail-oriented chairside manner and concierge follow-up.
+            Velvet lip stories, PRP revivals, and discreet maintenance sessions anchored by calm bedside manner and
+            concierge communication.
           </p>
           <ul>
             <li>Lip flips, filler, and touch-ups</li>
@@ -167,51 +203,23 @@
         </article>
       </section>
 
-      <section class="section timeline">
-        <div class="section__header">
-          <p class="eyebrow">Booking flow</p>
-          <h2>Four polished steps to your appointment</h2>
-        </div>
-        <ol>
-          <li>
-            <h3>Submit request</h3>
-            <p>Choose your preferred provider and share desired dates during checkout.</p>
-          </li>
-          <li>
-            <h3>Place deposit</h3>
-            <p>Complete a ${{ deposit_amount }} deposit here; payment encrypts instantly and never leaves the site.</p>
-          </li>
-          <li>
-            <h3>Instant confirmation</h3>
-            <p>We send intake forms, consent, and arrival details to your inbox without exposing backend services.</p>
-          </li>
-          <li>
-            <h3>Arrive &amp; glow</h3>
-            <p>Enjoy a tailored visit with private suites, warm welcomes, and on-time follow-up communications.</p>
-          </li>
-        </ol>
-      </section>
-
-      <section id="booking" class="panel panel--cta">
-        <div>
+      <section id="booking" class="section booking">
+        <div class="booking__intro">
           <p class="eyebrow">Reserve now</p>
-          <h2>Concierge scheduling at Glow Atelier</h2>
+          <h2>Secure your Glow Atelier appointment</h2>
           <p>
-            Request a time that suits your calendar, add any notes, and place your deposit without leaving this
-            page. Our concierge replies within one business day with your finalized itinerary and preparatory
-            guidance.
+            Use the encrypted Square element to finalize your deposit. Our concierge replies with your confirmed slot,
+            prep instructions, and aftercare kit tracking.
           </p>
-          <div class="cta-row">
-            <a class="btn btn--primary" href="mailto:concierge@glowatelier.com">Email concierge</a>
-            <a class="btn btn--ghost" href="tel:+13138883057">Call (313) 888-3057</a>
-          </div>
-          <div class="consent">
-            <p>Privacy-first: no third-party portals, optional NDA, and bespoke aftercare delivered directly.</p>
+          <div class="contact-grid">
+            <a href="mailto:concierge@glowatelier.com">concierge@glowatelier.com</a>
+            <a href="tel:+13138883057">(313) 888-3057</a>
+            <p>4700 Greenfield Rd Suite 2F · Dearborn</p>
           </div>
         </div>
         <div class="card glass payment-card">
-          <h3>Secure deposit</h3>
-          <p>Complete the form below to finalize your request; funds apply toward your treatment day.</p>
+          <h3>Deposit + confirmation</h3>
+          <p>Pay your ${{ deposit_amount }} deposit below to complete booking.</p>
           <form
             id="deposit-form"
             data-deposit="{{ deposit_amount * 100 }}"
@@ -226,37 +234,47 @@
             <div id="card-element" class="card-element"></div>
             <button class="btn btn--primary" id="card-button" type="submit">Pay ${{ deposit_amount }} deposit</button>
             <p id="card-errors" role="alert"></p>
-            <p class="microcopy">You will receive confirmation + aftercare guidance immediately after payment.</p>
+            <p class="microcopy">Instant receipts + aftercare delivered automatically.</p>
           </form>
         </div>
       </section>
     </main>
 
     <footer>
-      <div>
-        <p>Glow Atelier • 4700 Greenfield Rd Suite 2F, Dearborn, MI 48126</p>
-        <p><a href="tel:+13138883057">(313) 888-3057</a> • <a href="mailto:concierge@glowatelier.com">concierge@glowatelier.com</a></p>
-        <p>All bookings, deposits, and communications are handled on-site for a seamless guest experience.</p>
-      </div>
+      <p>Glow Atelier · Everything from profile to payment happens here.</p>
+      <p>Follow @glowatelier and reply to confirmation emails for concierge support.</p>
     </footer>
 
     <script src="{{ square_js_src }}" defer></script>
     <script>
-      const tabs = document.querySelectorAll('.tab');
-      const grids = {
-        injectables: document.getElementById('injectables'),
-        prp: document.getElementById('prp'),
-        peels: document.getElementById('peels')
+      const tabButtons = document.querySelectorAll('.service-tab');
+      const tabPanels = {
+        injectables: document.getElementById('panel-injectables'),
+        prp: document.getElementById('panel-prp'),
+        peels: document.getElementById('panel-peels')
       };
 
-      tabs.forEach((tab) => {
-        tab.addEventListener('click', () => {
-          tabs.forEach((t) => t.classList.remove('is-active'));
-          tab.classList.add('is-active');
-          Object.values(grids).forEach((grid) => grid.classList.add('is-hidden'));
-          grids[tab.dataset.target].classList.remove('is-hidden');
+      tabButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          tabButtons.forEach((btn) => btn.classList.remove('is-active'));
+          button.classList.add('is-active');
+          Object.values(tabPanels).forEach((panel) => panel.classList.add('is-hidden'));
+          const panel = tabPanels[button.dataset.panel];
+          if (panel) {
+            panel.classList.remove('is-hidden');
+          }
         });
       });
+
+      const profileForm = document.getElementById('profile-form');
+      const profileSuccess = document.getElementById('profile-success');
+      if (profileForm) {
+        profileForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+          profileSuccess.textContent = 'Profile captured. Jump to the booking section to secure your visit.';
+          profileForm.reset();
+        });
+      }
 
       const initializeSquare = async () => {
         const depositForm = document.getElementById('deposit-form');
@@ -321,6 +339,7 @@
             }
 
             cardErrors.textContent = 'Deposit received. Your confirmation will arrive shortly.';
+            depositForm.reset();
           } catch (error) {
             cardErrors.textContent = error.message;
           }
