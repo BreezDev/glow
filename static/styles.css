@@ -424,6 +424,28 @@ main {
   font-weight: 600;
 }
 
+.quantity-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
+}
+
+.qty-btn {
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.quantity {
+  min-width: 1.5rem;
+  text-align: center;
+}
+
 .cart-total {
   display: flex;
   align-items: center;
@@ -451,6 +473,66 @@ main {
 .contact-grid a {
   color: var(--accent-alt);
   text-decoration: none;
+}
+
+.availability-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.calendar-panel {
+  margin: 0.5rem 0 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.availability-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+
+.availability-day {
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  padding: 0.75rem;
+  background: rgba(5, 8, 19, 0.7);
+}
+
+.availability-day__header {
+  margin-bottom: 0.5rem;
+  color: var(--accent-alt);
+}
+
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 0.4rem;
+}
+
+.time-slot {
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.time-slot.is-selected {
+  border-color: var(--accent-alt);
+  background: rgba(255, 195, 113, 0.15);
+  color: var(--accent-alt);
 }
 
 .payment-card form {
