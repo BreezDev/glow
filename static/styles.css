@@ -642,3 +642,206 @@ footer {
     flex-direction: column;
   }
 }
+
+/* ============================
+   GLOWMEDI — BOOKING CALENDAR
+   Matches existing theme
+   ============================ */
+
+/* BOOK NOW CART COUNT */
+#open-cart {
+  position: relative;
+  background: linear-gradient(120deg, var(--accent), var(--accent-alt));
+  color: #05070f;
+  font-weight: 600;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.25s ease;
+  box-shadow: 0 12px 35px rgba(255, 95, 109, 0.35);
+}
+
+#open-cart:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 45px rgba(255, 95, 109, 0.5);
+}
+
+.cart-count-badge {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  padding: 2px 7px;
+  margin-left: 6px;
+  font-size: 12px;
+  box-shadow: 0 0 10px rgba(255, 95, 109, 0.55);
+}
+
+
+/* =============================
+   CALENDAR GRID
+   ============================= */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.calendar-day {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  padding: 1.1rem 0.75rem;
+  text-align: center;
+  color: var(--text);
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+
+.calendar-day:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-3px);
+}
+
+.calendar-day.selected {
+  background: linear-gradient(120deg, var(--accent), var(--accent-alt));
+  color: #05070f;
+  border-color: transparent;
+  font-weight: 700;
+  box-shadow: 0 10px 40px rgba(255, 95, 109, 0.3);
+}
+
+
+/* =============================
+   TIME SLOT BUTTONS
+   ============================= */
+#time-slot-list button.slot-btn {
+  padding: 0.9rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  width: 100%;
+  margin-bottom: 0.7rem;
+  font-size: 0.97rem;
+  transition: 0.25s ease;
+}
+
+#time-slot-list button.slot-btn:hover {
+  background: rgba(255,255,255,0.10);
+}
+
+#time-slot-list button.slot-btn.selected {
+  background: linear-gradient(120deg, var(--accent), var(--accent-alt));
+  color: #05070f;
+  border-color: transparent;
+  font-weight: 600;
+}
+
+
+/* =============================
+   CART PANEL
+   ============================= */
+#cart-panel {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  padding: 1.75rem;
+  margin-top: 3rem;
+  backdrop-filter: blur(14px);
+}
+
+#cart-items div {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+#cart-items div:last-child {
+  border-bottom: none;
+}
+
+
+/* =============================
+   COUPON INPUT
+   ============================= */
+#coupon-code {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  padding: 0.8rem;
+  color: var(--text);
+  font-family: inherit;
+}
+
+#coupon-code:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(255,95,109,0.35);
+  outline: none;
+}
+
+
+/* =============================
+   PAYMENT (Square Card)
+   ============================= */
+#card-container {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  padding: 1.4rem;
+  border-radius: 1rem;
+  backdrop-filter: blur(12px);
+  margin-top: 1rem;
+}
+
+
+/* PAYMENT BUTTON */
+#pay-button {
+  background: linear-gradient(120deg, var(--accent), var(--accent-alt));
+  border: none;
+  color: #0a0d18;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 0.9rem;
+  width: 100%;
+  margin-top: 1rem;
+  box-shadow: 0 10px 30px rgba(255, 95, 109, 0.35);
+  transition: 0.25s ease;
+}
+
+#pay-button:hover {
+  box-shadow: 0 12px 40px rgba(255, 95, 109, 0.5);
+}
+
+
+/* FREE CONFIRM BUTTON */
+#free-confirm {
+  background: linear-gradient(120deg, #45f28b, #d2ff8d);
+  border: none;
+  color: #05070f;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 0.9rem;
+  width: 100%;
+  margin-top: 1rem;
+  display: none;
+  box-shadow: 0 10px 30px rgba(60, 255, 150, 0.35);
+  transition: 0.25s ease;
+}
+
+#free-confirm:hover {
+  box-shadow: 0 12px 40px rgba(60, 255, 150, 0.55);
+}
+
+
+/* =============================
+   MOBILE FRIENDLY BREAKPOINTS
+   ============================= */
+@media (max-width: 768px) {
+  .calendar-grid {
+    grid-template-columns: repeat(auto-fill, minmax(46%, 1fr));
+  }
+}

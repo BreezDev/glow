@@ -1,20 +1,67 @@
 import json
 import os
 import uuid
-from datetime import date, timedelta
+import pytz
+from datetime import date, datetime, time, timedelta
 from typing import Any, Dict, List
 
 from flask import Flask, jsonify, render_template, request
 from urllib import error as urllib_error
 from urllib import request as urllib_request
 
+# Load environment variables
+from dotenv import load_dotenv
+load_dotenv()
+
+# Correct timezone (handles EST & EDT automatically)
+NY = pytz.timezone("America/New_York")
+
+# Load free coupon codes (comma-separated)
+free_codes = os.getenv("FREE_COUPON_CODES", "")
+free_codes = [c.strip().upper() for c in free_codes.split(",") if c.strip()]
+
+
+def build_availability(days: int = 7) -> Dict[str, List[str]]:
+    schedule_env = os.getenv("GLOW_AVAILABILITY_JSON")
+    if schedule_env:
+        try:
+            loaded = json.loads(schedule_env)
+            if isinstance(loaded, dict):
+                return loaded
+        except json.JSONDecodeError:
+            pass
+
+    today = date.today()
+    start_time = time(10, 0)
+    end_time = time(18, 0)
+    slot_length = timedelta(minutes=45)
+
+    availability: Dict[str, List[str]] = {}
+
+    for offset in range(days):
+        day = today + timedelta(days=offset)
+        slots = []
+
+        current_dt = datetime.combine(day, start_time)
+        end_dt = datetime.combine(day, end_time)
+
+        while current_dt <= end_dt:
+            est_dt = NY.localize(current_dt)
+            slots.append(est_dt.strftime("%I:%M %p"))
+            current_dt += slot_length
+
+        availability[day.isoformat()] = slots
+
+    return availability
+
 
 def build_app() -> Flask:
     app = Flask(__name__, static_folder="static", template_folder="templates")
 
-    app.config["DEPOSIT_AMOUNT"] = int(os.getenv("DEPOSIT_AMOUNT", "50"))
-    app.config["SQUARE_APPLICATION_ID"] = os.getenv("SQUARE_APPLICATION_ID", "sq0idp-placeholder")
-    app.config["SQUARE_LOCATION_ID"] = os.getenv("SQUARE_LOCATION_ID", "L88917HQXXXX")
+    # Config
+    app.config["DEPOSIT_AMOUNT"] = 50  # ALWAYS $50
+    app.config["SQUARE_APPLICATION_ID"] = os.getenv("SQUARE_APPLICATION_ID", "")
+    app.config["SQUARE_LOCATION_ID"] = os.getenv("SQUARE_LOCATION_ID", "")
     app.config["SQUARE_ACCESS_TOKEN"] = os.getenv("SQUARE_ACCESS_TOKEN")
 
     environment = os.getenv("SQUARE_ENVIRONMENT", "sandbox").lower()
@@ -29,7 +76,8 @@ def build_app() -> Flask:
         app.config["SQUARE_API_BASE"] = "https://connect.squareupsandbox.com"
         app.config["SQUARE_JS_SRC"] = "https://sandbox.web.squarecdn.com/v1/square.js"
 
-    injectables: List[Dict[str, str]] = [
+    # Services
+    injectables = [
         {"name": "Botox smooth", "price": "$9/unit", "duration": "15 min", "details": "Quick wrinkle softening"},
         {"name": "Botox refresh", "price": "$9/unit", "duration": "30 min", "details": "Balanced upper-face map"},
         {"name": "Botox touch up", "price": "Complimentary", "duration": "10 min", "details": "2-week tweak"},
@@ -45,38 +93,22 @@ def build_app() -> Flask:
         {"name": "Sculptra", "price": "$550+", "duration": "60 min", "details": "Collagen boost"},
     ]
 
-    prp: List[Dict[str, str]] = [
+    prp = [
         {"name": "PRP facial", "price": "$250/session", "duration": "60 min", "details": "Microneedling + PRP"},
         {"name": "PRP under eyes", "price": "$150/session", "duration": "45 min", "details": "Brighten + thicken"},
         {"name": "PRP hair restoration", "price": "$250/session", "duration": "60 min", "details": "Scalp stimulation"},
     ]
 
-    peels: List[Dict[str, str]] = [
+    peels = [
         {"name": "Perfect Derma Peel", "price": "$175", "duration": "45 min", "details": "Refined glow"},
         {"name": "Glow peel add-on", "price": "$125", "duration": "30 min", "details": "Fast exfoliation"},
     ]
 
-    def build_availability(days: int = 7) -> Dict[str, List[str]]:
-        schedule_env = os.getenv("STRIPE_AVAILABILITY_JSON")
-        if schedule_env:
-            try:
-                loaded = json.loads(schedule_env)
-                if isinstance(loaded, dict):
-                    return loaded
-            except json.JSONDecodeError:
-                pass
-
-        today = date.today()
-        daily_slots = ["09:00", "10:30", "12:00", "14:00", "15:30", "17:00"]
-        return {
-            (today + timedelta(days=offset)).isoformat(): daily_slots
-            for offset in range(days)
-        }
-
     availability = build_availability()
 
+    # Landing Page
     @app.get("/")
-    def landing() -> str:
+    def landing():
         return render_template(
             "index.html",
             injectables=injectables,
@@ -86,9 +118,10 @@ def build_app() -> Flask:
             square_application_id=app.config["SQUARE_APPLICATION_ID"],
             square_location_id=app.config["SQUARE_LOCATION_ID"],
             square_js_src=app.config["SQUARE_JS_SRC"],
-            deposit_amount=app.config["DEPOSIT_AMOUNT"],
+            deposit_amount=50,  # always $50
         )
 
+    # Email Sending
     def send_resend_confirmation(
         *,
         guest_email: str,
@@ -99,57 +132,58 @@ def build_app() -> Flask:
         deposit_total: float,
     ) -> None:
         api_key = os.getenv("RESEND_API_KEY")
-        if not api_key or not guest_email:
+        if not api_key:
             return
 
-        subject = "GlowMedi reservation confirmation"
+        recipients = ["farah@glowmedi.clinic", "malak@glowmedi.clinic"]
+        if guest_email:
+            recipients.insert(0, guest_email)
+
         line_items = "".join(
-            f"<li>{item.get('name')} — Qty {item.get('quantity', 1)}</li>" for item in cart_items
+            f"<li>{item.get('name')} — Qty {item.get('quantity', 1)}</li>"
+            for item in cart_items
         )
+
         html_body = f"""
             <p>Hi {guest_name or 'Glow guest'},</p>
-            <p>Thank you for reserving with GlowMedi. We've captured your deposit and confirmed your requested slot.</p>
+            <p>Your reservation has been confirmed.</p>
             <ul>
               <li><strong>Date</strong>: {appointment_date}</li>
               <li><strong>Time</strong>: {appointment_time}</li>
               <li><strong>Deposit</strong>: ${deposit_total:.2f}</li>
             </ul>
-            <p><strong>Selected rituals</strong>:</p>
+            <p><strong>Selected rituals:</strong></p>
             <ul>{line_items}</ul>
-            <p>We'll reach out shortly to finalize any details.</p>
         """
 
         body = json.dumps(
             {
                 "from": "GlowMedi <bookings@glowmedi.clinic>",
-                "to": [guest_email, "farah@glowmedi.clinic", "malak@glowmedi.clinic"],
-                "subject": subject,
+                "to": recipients,
+                "subject": "GlowMedi reservation confirmation",
                 "html": html_body,
             }
         ).encode("utf-8")
 
-        request_obj = urllib_request.Request(
+        req = urllib_request.Request(
             url="https://api.resend.com/emails",
             data=body,
-            headers={
-                "Content-Type": "application/json",
-                "Authorization": f"Bearer {api_key}",
-            },
+            headers={"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"},
             method="POST",
         )
 
         try:
-            urllib_request.urlopen(request_obj, timeout=10)
+            urllib_request.urlopen(req, timeout=10)
         except urllib_error.URLError:
-            return
+            pass
 
+    # PAYMENT PROCESSING
     @app.post("/process-payment")
-    def process_payment() -> Any:
-        if not app.config["SQUARE_ACCESS_TOKEN"]:
-            return jsonify({"error": "Square access token is not configured."}), 500
+    def process_payment():
+        payload = request.get_json(force=True, silent=True) or {}
 
-        payload: Dict[str, Any] = request.get_json(force=True, silent=True) or {}
         token = payload.get("token")
+        coupon = (payload.get("coupon") or "").upper()
         buyer_email = payload.get("email")
         guest_name = payload.get("name")
         phone = payload.get("phone")
@@ -157,15 +191,28 @@ def build_app() -> Flask:
         appointment_time = payload.get("appointmentTime")
         cart_items = payload.get("cart", [])
 
+        if not cart_items:
+            return jsonify({"error": "Cart is empty."}), 400
+
+        is_free = coupon in free_codes
+        deposit_amount = 0 if is_free else 50
+        amount_cents = deposit_amount * 100
+
+        # --- IF FREE: skip Square entirely ---
+        if is_free:
+            send_resend_confirmation(
+                guest_email=buyer_email or "",
+                guest_name=guest_name or "",
+                appointment_date=appointment_date,
+                appointment_time=appointment_time,
+                cart_items=cart_items,
+                deposit_total=0.00,
+            )
+            return jsonify({"status": "success", "paymentId": None})
+
+        # ---- Normal Square Payment ----
         if not token:
             return jsonify({"error": "Payment token is required."}), 400
-        if not cart_items:
-            return jsonify({"error": "Cart is empty. Please add a treatment before checkout."}), 400
-        if not appointment_date or not appointment_time:
-            return jsonify({"error": "Appointment date and time are required."}), 400
-
-        deposit_amount = app.config["DEPOSIT_AMOUNT"] * max(sum(int(item.get("quantity", 1)) for item in cart_items), 1)
-        amount_cents = deposit_amount * 100
 
         headers = {
             "Authorization": f"Bearer {app.config['SQUARE_ACCESS_TOKEN']}",
@@ -174,113 +221,79 @@ def build_app() -> Flask:
             "Square-Version": "2024-06-12",
         }
 
-        order_details: Dict[str, Any] = {
-            "location_id": app.config["SQUARE_LOCATION_ID"],
-            "line_items": [
-                {
-                    "name": item.get("name", "Glow service"),
-                    "quantity": str(item.get("quantity", 1)),
-                    "base_price_money": {
-                        "amount": app.config["DEPOSIT_AMOUNT"] * 100,
-                        "currency": "USD",
-                    },
-                }
-                for item in cart_items
-            ],
-            "note": f"Requested {appointment_date} at {appointment_time} | Phone: {phone or 'N/A'}",
-        }
-
-        if guest_name:
-            order_details["reference_id"] = f"Booking for {guest_name}"
-
+        # Create order
         order_body = {
             "idempotency_key": str(uuid.uuid4()),
-            "order": order_details,
+            "order": {
+                "location_id": app.config["SQUARE_LOCATION_ID"],
+                "line_items": [
+                    {
+                        "name": item.get("name", "Glow service"),
+                        "quantity": str(item.get("quantity", 1)),
+                        "base_price_money": {
+                            "amount": 5000,  # DEPOSIT ONLY, not full service charge
+                            "currency": "USD",
+                        },
+                    }
+                    for item in cart_items
+                ],
+                "note": f"Requested {appointment_date} at {appointment_time} | Phone: {phone or 'N/A'}",
+            },
         }
 
-        order_bytes = json.dumps(order_body).encode("utf-8")
-        order_request = urllib_request.Request(
+        order_req = urllib_request.Request(
             url=f"{app.config['SQUARE_API_BASE']}/v2/orders",
-            data=order_bytes,
+            data=json.dumps(order_body).encode("utf-8"),
             headers=headers,
             method="POST",
         )
 
         try:
-            with urllib_request.urlopen(order_request, timeout=10) as response:
-                order_status = response.getcode()
-                order_response = response.read().decode("utf-8")
-        except urllib_error.HTTPError as exc:
-            order_status = exc.code
-            order_response = exc.read().decode("utf-8")
-        except urllib_error.URLError as exc:  # pragma: no cover - network failure
-            return jsonify({"error": f"Unable to reach Square: {exc.reason}"}), 502
-
-        order_data = json.loads(order_response or "{}")
-        if not (200 <= order_status < 300):
-            errors = order_data.get("errors")
-            message = errors[0].get("detail") if errors else "Unable to create order."
-            return jsonify({"error": message}), order_status
+            with urllib_request.urlopen(order_req, timeout=10) as res:
+                order_data = json.loads(res.read())
+        except:
+            return jsonify({"error": "Unable to create order."}), 500
 
         order_id = order_data.get("order", {}).get("id")
 
+        # Payment
         payment_body = {
             "idempotency_key": str(uuid.uuid4()),
             "amount_money": {"amount": amount_cents, "currency": "USD"},
             "source_id": token,
             "location_id": app.config["SQUARE_LOCATION_ID"],
             "autocomplete": True,
-            "note": "GlowMedi reservation deposit",
             "order_id": order_id,
         }
-        if buyer_email:
-            payment_body["buyer_email_address"] = buyer_email
-        if guest_name:
-            payment_body["billing_address"] = {"first_name": guest_name.split(" ")[0]}
 
-        payment_bytes = json.dumps(payment_body).encode("utf-8")
-        payment_request = urllib_request.Request(
+        pay_req = urllib_request.Request(
             url=f"{app.config['SQUARE_API_BASE']}/v2/payments",
-            data=payment_bytes,
+            data=json.dumps(payment_body).encode("utf-8"),
             headers=headers,
             method="POST",
         )
 
         try:
-            with urllib_request.urlopen(payment_request, timeout=10) as response:
-                status_code = response.getcode()
-                response_body = response.read().decode("utf-8")
+            with urllib_request.urlopen(pay_req, timeout=10) as res:
+                pay_data = json.loads(res.read())
         except urllib_error.HTTPError as exc:
-            status_code = exc.code
-            response_body = exc.read().decode("utf-8")
-        except urllib_error.URLError as exc:  # pragma: no cover - network failure
-            return jsonify({"error": f"Unable to reach Square: {exc.reason}"}), 502
+            return jsonify({"error": exc.read().decode()}), exc.code
 
-        data = json.loads(response_body or "{}")
-        if 200 <= status_code < 300:
-            payment = data.get("payment", {})
-            send_resend_confirmation(
-                guest_email=buyer_email or "",
-                guest_name=guest_name or "",
-                appointment_date=appointment_date,
-                appointment_time=appointment_time,
-                cart_items=cart_items,
-                deposit_total=float(deposit_amount),
-            )
-            return jsonify(
-                {
-                    "status": payment.get("status", "SUCCESS"),
-                    "paymentId": payment.get("id"),
-                    "receiptUrl": payment.get("receipt_url"),
-                }
-            )
+        # Send confirmation
+        send_resend_confirmation(
+            guest_email=buyer_email or "",
+            guest_name=guest_name or "",
+            appointment_date=appointment_date,
+            appointment_time=appointment_time,
+            cart_items=cart_items,
+            deposit_total=float(deposit_amount),
+        )
 
-        errors = data.get("errors")
-        message = errors[0].get("detail") if errors else "Payment failed."
-        return jsonify({"error": message}), status_code
+        return jsonify({"status": "success", "paymentId": pay_data.get("payment", {}).get("id")})
 
+    # Availability Feed
     @app.get("/availability")
-    def availability_feed() -> Any:
+    def availability_feed():
         return jsonify({"availability": availability})
 
     return app
