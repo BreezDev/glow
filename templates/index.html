@@ -52,8 +52,8 @@
           <h3>Sign up → Choose ritual → Secure deposit</h3>
           <ol>
             <li>Complete the client profile for secure storage.</li>
-            <li>Browse the ritual library and tap the booking step.</li>
-            <li>Pay the ${{ deposit_amount }} deposit via Square without leaving.</li>
+            <li>Add rituals to your cart and pick the exact appointment date + time.</li>
+            <li>Pay the ${{ deposit_amount }} per-ritual deposit via Square without leaving.</li>
             <li>Instant confirmation and prep slides into your inbox.</li>
           </ol>
           <p class="microcopy">Encrypted, nurse-led, and designed for decisive guests.</p>
@@ -112,6 +112,7 @@
               <span>{{ item.price }}</span>
               <span>{{ item.duration }}</span>
             </div>
+            <button class="btn btn--ghost add-to-cart" data-name="{{ item.name }}" type="button">Add to cart</button>
           </article>
           {% endfor %}
         </div>
@@ -126,6 +127,7 @@
               <span>{{ item.price }}</span>
               <span>{{ item.duration }}</span>
             </div>
+            <button class="btn btn--ghost add-to-cart" data-name="{{ item.name }}" type="button">Add to cart</button>
           </article>
           {% endfor %}
         </div>
@@ -140,6 +142,7 @@
               <span>{{ item.price }}</span>
               <span>{{ item.duration }}</span>
             </div>
+            <button class="btn btn--ghost add-to-cart" data-name="{{ item.name }}" type="button">Add to cart</button>
           </article>
           {% endfor %}
         </div>
@@ -208,8 +211,8 @@
           <p class="eyebrow">Reserve now</p>
           <h2>Secure your Glow Atelier appointment</h2>
           <p>
-            Use the encrypted Square element to finalize your deposit. Our concierge replies with your confirmed slot,
-            prep instructions, and aftercare kit tracking.
+            Add your rituals to the cart, choose the exact date and time, and finalize a ${{ deposit_amount }} per-ritual
+            deposit. Our concierge replies with your confirmed slot, prep instructions, and aftercare kit tracking.
           </p>
           <div class="contact-grid">
             <a href="mailto:concierge@glowatelier.com">concierge@glowatelier.com</a>
@@ -218,24 +221,45 @@
           </div>
         </div>
         <div class="card glass payment-card">
-          <h3>Deposit + confirmation</h3>
-          <p>Pay your ${{ deposit_amount }} deposit below to complete booking.</p>
-          <form
-            id="deposit-form"
-            data-deposit="{{ deposit_amount * 100 }}"
-            data-square-app="{{ square_application_id }}"
-            data-square-location="{{ square_location_id }}"
-          >
-            <label for="guest-name">Guest name</label>
-            <input id="guest-name" name="guest-name" type="text" placeholder="Full name" required />
-            <label for="guest-email">Email</label>
-            <input id="guest-email" name="guest-email" type="email" placeholder="you@example.com" required />
-            <label>Card details</label>
-            <div id="card-element" class="card-element"></div>
-            <button class="btn btn--primary" id="card-button" type="submit">Pay ${{ deposit_amount }} deposit</button>
-            <p id="card-errors" role="alert"></p>
-            <p class="microcopy">Instant receipts + aftercare delivered automatically.</p>
-          </form>
+          <h3>Cart, calendar, and deposit</h3>
+          <p>Lock in your date and time, then pay a ${{ deposit_amount }} deposit for each ritual in your cart.</p>
+          <div class="booking-grid">
+            <div class="cart-panel">
+              <div class="cart-header">
+                <h4>Cart</h4>
+                <p class="microcopy">Add rituals from the sections above.</p>
+              </div>
+              <ul id="cart-items" class="cart-list"></ul>
+              <p id="empty-cart" class="microcopy">Your cart is empty. Add at least one ritual to continue.</p>
+              <div class="cart-total">
+                <span>Deposit due</span>
+                <strong id="deposit-total">${{ deposit_amount }}.00</strong>
+              </div>
+            </div>
+            <form
+              id="deposit-form"
+              data-deposit-cents="{{ deposit_amount * 100 }}"
+              data-deposit-display="{{ deposit_amount }}"
+              data-square-app="{{ square_application_id }}"
+              data-square-location="{{ square_location_id }}"
+            >
+              <label for="appointment-date">Appointment date</label>
+              <input id="appointment-date" name="appointment-date" type="date" required />
+              <label for="appointment-time">Preferred time</label>
+              <input id="appointment-time" name="appointment-time" type="time" required />
+              <label for="guest-name">Guest name</label>
+              <input id="guest-name" name="guest-name" type="text" placeholder="Full name" required />
+              <label for="guest-email">Email</label>
+              <input id="guest-email" name="guest-email" type="email" placeholder="you@example.com" required />
+              <label for="guest-phone">Phone</label>
+              <input id="guest-phone" name="guest-phone" type="tel" placeholder="(313) 555-1234" required />
+              <label>Card details</label>
+              <div id="card-element" class="card-element"></div>
+              <button class="btn btn--primary" id="card-button" type="submit">Pay deposit</button>
+              <p id="card-errors" role="alert"></p>
+              <p class="microcopy">Instant receipts + aftercare delivered automatically to you and the clinical team.</p>
+            </form>
+          </div>
         </div>
       </section>
     </main>
@@ -278,14 +302,75 @@
 
       const initializeSquare = async () => {
         const depositForm = document.getElementById('deposit-form');
-        if (!depositForm || !window.Square) {
+        const cardErrors = document.getElementById('card-errors');
+        const cartList = document.getElementById('cart-items');
+        const emptyCart = document.getElementById('empty-cart');
+        const depositTotal = document.getElementById('deposit-total');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+        if (!depositForm) return;
+
+        const depositPerItemCents = parseInt(depositForm.dataset.depositCents, 10) || 0;
+        const depositPerItemDisplay = parseFloat(depositForm.dataset.depositDisplay || '0');
+        const cart = [];
+
+        const renderCart = () => {
+          cartList.innerHTML = '';
+          if (!cart.length) {
+            emptyCart.style.display = 'block';
+            depositTotal.textContent = '$0.00';
+            return;
+          }
+
+          emptyCart.style.display = 'none';
+
+          cart.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.classList.add('cart-item');
+            li.innerHTML = `
+              <div>
+                <p class="cart-item__name">${item.name}</p>
+                <p class="microcopy">Quantity: ${item.quantity}</p>
+              </div>
+              <button type="button" class="remove-item" data-index="${index}">Remove</button>
+            `;
+            cartList.appendChild(li);
+          });
+
+          const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+          const totalDeposit = depositPerItemDisplay * totalQuantity;
+          depositTotal.textContent = `$${totalDeposit.toFixed(2)}`;
+        };
+
+        addToCartButtons.forEach((button) => {
+          button.addEventListener('click', () => {
+            const name = button.dataset.name;
+            const existing = cart.find((item) => item.name === name);
+            if (existing) {
+              existing.quantity += 1;
+            } else {
+              cart.push({ name, quantity: 1 });
+            }
+            renderCart();
+            cardErrors.textContent = '';
+          });
+        });
+
+        cartList.addEventListener('click', (event) => {
+          const target = event.target;
+          if (target.classList.contains('remove-item')) {
+            const index = parseInt(target.dataset.index, 10);
+            cart.splice(index, 1);
+            renderCart();
+          }
+        });
+
+        if (!window.Square) {
           return;
         }
 
-        const cardErrors = document.getElementById('card-errors');
         const appId = depositForm.dataset.squareApp;
         const locationId = depositForm.dataset.squareLocation;
-        const depositAmount = parseInt(depositForm.dataset.deposit, 10);
 
         if (!appId || !locationId) {
           cardErrors.textContent = 'Payment configuration is missing.';
@@ -313,8 +398,24 @@
           event.preventDefault();
           cardErrors.textContent = '';
 
+          if (!cart.length) {
+            cardErrors.textContent = 'Add at least one ritual to your cart before checking out.';
+            return;
+          }
+
           const name = document.getElementById('guest-name').value;
           const email = document.getElementById('guest-email').value;
+          const phone = document.getElementById('guest-phone').value;
+          const appointmentDate = document.getElementById('appointment-date').value;
+          const appointmentTime = document.getElementById('appointment-time').value;
+
+          if (!appointmentDate || !appointmentTime) {
+            cardErrors.textContent = 'Choose a date and time for your appointment.';
+            return;
+          }
+
+          const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+          const depositAmount = depositPerItemCents * totalQuantity;
 
           try {
             const result = await card.tokenize();
@@ -329,7 +430,11 @@
                 token: result.token,
                 amount: depositAmount,
                 name,
-                email
+                email,
+                phone,
+                appointmentDate,
+                appointmentTime,
+                cart
               })
             });
 
@@ -338,12 +443,16 @@
               throw new Error(data.error || 'Unable to finalize payment.');
             }
 
-            cardErrors.textContent = 'Deposit received. Your confirmation will arrive shortly.';
+            cardErrors.textContent = 'Deposit received. Your calendar request and recap email are on the way.';
             depositForm.reset();
+            cart.splice(0, cart.length);
+            renderCart();
           } catch (error) {
             cardErrors.textContent = error.message;
           }
         });
+
+        renderCart();
       };
 
       document.addEventListener('DOMContentLoaded', () => {
