@@ -3,45 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Glow Atelier | Cosmetic Artistry by Farah & Malak</title>
+    <title>Glow Atelier | Aesthetic Medicine by Farah &amp; Malak</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Space+Grotesk:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Space+Grotesk:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
   <body>
     <header class="hero">
+      <div class="hero__halo"></div>
       <div class="hero__content">
-        <p class="eyebrow">Glow Atelier • Cosmetic Medicine</p>
-        <h1>Elevated injectable artistry by Farah &amp; Malak</h1>
+        <p class="eyebrow">Glow Atelier • Toronto</p>
+        <h1>Bespoke injectable rituals for the modern aesthete</h1>
         <p>
-          Modern enhancements rooted in clinical expertise. Explore curated
-          treatment plans, reserve with Square, and receive elegant reminders via
-          Resend—all while we protect your privacy and consent.
+          Farah Kassim and Malak Rahim craft quietly luxurious results using
+          couture treatment maps, medical-grade injectables, and concierge-level
+          aftercare. Private bookings are available daily with secure deposits
+          collected in-suite via Square.
         </p>
         <div class="cta-row">
-          <a class="btn btn--primary" href="#booking">Reserve on Square</a>
-          <a class="btn btn--ghost" href="#treatments">Browse services</a>
+          <a class="btn btn--primary" href="#booking">Reserve a suite</a>
+          <a class="btn btn--ghost" href="#treatments">Preview the menu</a>
         </div>
         <div class="hero__badges">
-          <span>Board-certified injectors</span>
-          <span>Square loyalty welcome</span>
-          <span>Photo consent optional</span>
+          <span>Clinical artistry</span>
+          <span>Confidential protocols</span>
+          <span>White-glove hospitality</span>
         </div>
       </div>
       <div class="hero__card">
         <div class="hero__card-inner">
-          <p>Featured concierge plan</p>
-          <h3>Signature Glow</h3>
+          <p class="eyebrow">Curated experience</p>
+          <h3>Signature Glow Voyage</h3>
           <ul>
-            <li>Full-face assessment with Farah</li>
-            <li>Strategic Botox + filler placement</li>
-            <li>SkinVive hydration boost</li>
+            <li>Full facial mapping with Farah</li>
+            <li>Strategic Botox + contour filler</li>
+            <li>SkinVive luminosity veil</li>
           </ul>
-          <p class="card-note">Avg. 90 minutes • Custom pricing</p>
+          <p class="card-note">Allow 90 minutes • Investment shared at consult</p>
         </div>
       </div>
     </header>
@@ -49,30 +51,30 @@
     <main>
       <section id="providers" class="panel panel--duo">
         <article>
-          <p class="eyebrow">Lead provider</p>
+          <p class="eyebrow">Creative Director</p>
           <h2>Farah Kassim</h2>
           <p>
-            Master injector and creative director. Farah oversees every
-            treatment protocol, offers advanced sculpting such as nose contouring,
-            and ensures meticulous aftercare.
+            A master injector celebrated for sculptural precision, Farah oversees
+            comprehensive plans and advanced transformations including nose
+            contouring, midface support, and subtle bio-stimulation pairings.
           </p>
           <ul>
             <li>Precision Botox mapping</li>
             <li>Custom filler harmonization</li>
-            <li>Personalized maintenance schedule</li>
+            <li>Personalized maintenance cadence</li>
           </ul>
         </article>
         <article>
-          <p class="eyebrow">Senior provider</p>
+          <p class="eyebrow">Senior Injector</p>
           <h2>Malak Rahim</h2>
           <p>
-            Malak delivers seamless Botox touch ups, PRP regeneration plans, and
-            confidence-boosting lip transformations tailored to your goals.
+            Malak curates luminous refreshes—lip stories, PRP revivals, and
+            discrete touch ups—with the calm expertise of a clinical artist.
           </p>
           <ul>
-            <li>Subtle lip flips and lip filler</li>
+            <li>Subtle lip flips &amp; velvet lip filler</li>
             <li>PRP under-eye + hair restoration</li>
-            <li>Holistic maintenance coaching</li>
+            <li>Holistic aftercare rituals</li>
           </ul>
         </article>
       </section>
@@ -82,16 +84,14 @@
           <p class="eyebrow">Immersive menu</p>
           <h2>Select your artistry</h2>
           <p>
-            Every reservation begins with a digital intake, deposit via Square,
-            and optional consent for before/after photography.
+            Each reservation begins with a digital intake, couture consent, and a
+            discreet reminder 48 hours prior to your suite time.
           </p>
         </div>
         <div class="tabs">
-          <button class="tab is-active" data-target="injectables">
-            Injectables
-          </button>
+          <button class="tab is-active" data-target="injectables">Injectables</button>
           <button class="tab" data-target="prp">PRP Rituals</button>
-          <button class="tab" data-target="peels">Peels &amp; Skin</button>
+          <button class="tab" data-target="peels">Skin Lab</button>
         </div>
         <div class="grid" id="injectables">
           {% for item in injectables %}
@@ -140,35 +140,35 @@
       <section class="section timeline">
         <div class="section__header">
           <p class="eyebrow">Your booking flow</p>
-          <h2>Polished from deposit to glow</h2>
+          <h2>Polished from invitation to glow</h2>
         </div>
         <ol>
           <li>
             <h3>Reserve</h3>
             <p>
-              Use our Square booking calendar to choose Farah or Malak, secure
-              your deposit, and automatically earn loyalty points.
+              Submit availability, complete your intake, and place a fully
+              encrypted deposit below without leaving Glow Atelier.
             </p>
           </li>
           <li>
             <h3>Consent &amp; prep</h3>
             <p>
-              Receive a Resend email packet with digital intake forms, optional
-              photo consent, and tailored prep instructions.
+              Receive a Resend packet with couture consent, privacy preferences,
+              and photo policy selections.
             </p>
           </li>
           <li>
             <h3>Treatment day</h3>
             <p>
-              Luxurious treatment suite with aromatherapy, sterile protocols, and
-              a quiet playlist so you can fully relax.
+              Arrive to aromatic suites, a chilled beverage ritual, and sterile
+              clinical protocols curated to your plan.
             </p>
           </li>
           <li>
             <h3>Aftercare</h3>
             <p>
-              Follow-up reminders arrive via Resend with healing tips, touch-up
-              eligibility, and loyalty incentives for your next glow.
+              Expect discreet check-ins, touch-up invitations, and loyalty
+              rewards that feel like a private club.
             </p>
           </li>
         </ol>
@@ -177,43 +177,52 @@
       <section id="booking" class="panel panel--cta">
         <div>
           <p class="eyebrow">Ready to reserve?</p>
-          <h2>Book with Square in seconds</h2>
+          <h2>Book directly with our concierge</h2>
           <p>
-            Secure your preferred date, manage deposits, and enroll in loyalty
-            with one elegant checkout. We'll confirm within 24 hours.
+            Complete your preferred date request, then secure a
+            ${{ deposit_amount }} deposit using the private payment form. Our
+            concierge will confirm within one business day.
           </p>
           <div class="cta-row">
-            <a class="btn btn--primary" href="https://squareup.com/appointments" target="_blank" rel="noreferrer"
-              >Open booking calendar</a
-            >
-            <a class="btn btn--ghost" href="mailto:hello@glowatelier.com"
-              >Email concierge</a
-            >
+            <a class="btn btn--primary" href="mailto:hello@glowatelier.com">Email the concierge</a>
+            <a class="btn btn--ghost" href="tel:+14165550147">Call the atelier</a>
           </div>
           <div class="consent">
             <p>
-              Need privacy? Simply toggle "No photos" inside the intake form.
-              We only capture imagery with explicit consent.
+              Privacy-first philosophy: photo capture only with explicit consent
+              and NDAs available on request.
             </p>
           </div>
         </div>
-        <div class="card glass">
-          <h3>Concierge checklist</h3>
-          <ul>
-            <li>Square deposit link</li>
-            <li>Automations via Resend</li>
-            <li>Photo consent record</li>
-            <li>Skin prep + aftercare PDFs</li>
-          </ul>
+        <div class="card glass payment-card">
+          <h3>Secure your deposit</h3>
+          <p>Square processes every payment end-to-end within Glow Atelier.</p>
+          <form
+            id="deposit-form"
+            data-deposit="{{ deposit_amount * 100 }}"
+            data-square-app="{{ square_application_id }}"
+            data-square-location="{{ square_location_id }}"
+          >
+            <label for="guest-name">Guest name</label>
+            <input id="guest-name" name="guest-name" type="text" placeholder="Full name" required />
+            <label for="guest-email">Email</label>
+            <input id="guest-email" name="guest-email" type="email" placeholder="you@example.com" required />
+            <label>Card details</label>
+            <div id="card-element" class="card-element"></div>
+            <button class="btn btn--primary" id="card-button" type="submit">Pay ${{ deposit_amount }} deposit</button>
+            <p id="card-errors" role="alert"></p>
+            <p class="microcopy">Deposits are applied in full to your final treatment invoice.</p>
+          </form>
         </div>
       </section>
     </main>
 
     <footer>
-      <p>Glow Atelier • Toronto • hello@glowatelier.com • (416) 555-0147</p>
-      <p>Follow @glowatelier on Instagram for treatment reveals.</p>
+      <p>Glow Atelier • 123 Hazelton Ave, Toronto • hello@glowatelier.com • (416) 555-0147</p>
+      <p>Follow @glowatelier for restrained reveal content.</p>
     </footer>
 
+    <script src="{{ square_js_src }}" defer></script>
     <script>
       const tabs = document.querySelectorAll('.tab');
       const grids = {
@@ -226,10 +235,82 @@
         tab.addEventListener('click', () => {
           tabs.forEach((t) => t.classList.remove('is-active'));
           tab.classList.add('is-active');
-
           Object.values(grids).forEach((grid) => grid.classList.add('is-hidden'));
           grids[tab.dataset.target].classList.remove('is-hidden');
         });
+      });
+
+      const initializeSquare = async () => {
+        const depositForm = document.getElementById('deposit-form');
+        if (!depositForm || !window.Square) {
+          return;
+        }
+
+        const cardErrors = document.getElementById('card-errors');
+        const appId = depositForm.dataset.squareApp;
+        const locationId = depositForm.dataset.squareLocation;
+        const depositAmount = parseInt(depositForm.dataset.deposit, 10);
+
+        if (!appId || !locationId) {
+          cardErrors.textContent = 'Square configuration is missing.';
+          return;
+        }
+
+        let payments;
+        try {
+          payments = window.Square.payments(appId, locationId);
+        } catch (error) {
+          cardErrors.textContent = error.message;
+          return;
+        }
+
+        let card;
+        try {
+          card = await payments.card();
+          await card.attach('#card-element');
+        } catch (error) {
+          cardErrors.textContent = error.message;
+          return;
+        }
+
+        depositForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          cardErrors.textContent = '';
+
+          const name = document.getElementById('guest-name').value;
+          const email = document.getElementById('guest-email').value;
+
+          try {
+            const result = await card.tokenize();
+            if (result.status !== 'OK') {
+              throw new Error(result.errors?.[0]?.message || 'Card could not be tokenized.');
+            }
+
+            const response = await fetch('/process-payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                token: result.token,
+                amount: depositAmount,
+                name,
+                email
+              })
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+              throw new Error(data.error || 'Unable to finalize payment.');
+            }
+
+            cardErrors.textContent = 'Deposit received. A concierge email is on the way.';
+          } catch (error) {
+            cardErrors.textContent = error.message;
+          }
+        });
+      };
+
+      document.addEventListener('DOMContentLoaded', () => {
+        initializeSquare();
       });
     </script>
   </body>
