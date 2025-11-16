@@ -6,98 +6,115 @@
     <title>GlowMedi | Botox, filler, and PRP booking</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="/static/styles.css"/>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
   </head>
 
   <body>
     <div class="background-texture"></div>
-
-    <!-- TOP NAV WITH CART COUNT -->
     <nav class="top-nav">
       <div class="logo">GlowMedi</div>
       <div class="nav-links">
-        <a href="#profile">Client profile</a>
+        <a href="#profile">Profile</a>
         <a href="#services">Treatments</a>
-        <a href="#providers">Team</a>
-
-        <!-- ⭐ Book Now with cart count badge -->
-        <a href="#booking" class="pill">
-          Book now
-          <span id="cart-count-badge" style="background:#ff5f6d;padding:2px 8px;border-radius:999px;margin-left:6px;font-size:12px;display:inline-block;">0</span>
-        </a>
+        <a href="#booking" class="pill">Book now <span id="cart-count-badge">0</span></a>
       </div>
     </nav>
 
-    <!-- HERO, PROFILE, SERVICES, FLOW, PROVIDERS (UNCHANGED) -->
-    <!-- (All sections preserved exactly as you provided) -->
-
     <header class="hero">
       <div class="hero__text">
-        <p class="badge">Dearborn, Michigan · Nurse practitioner owned</p>
-        <h1>Medical injectables, simplified. Book botox, filler, and PRP without leaving this page.</h1>
-        <p>GlowMedi keeps the flow short: choose a treatment, pick a time, pay your deposit, and get confirmed.</p>
+        <p class="badge">Dearborn · Medical aesthetics</p>
+        <h1>Square-synced injectables booking with loyalty built in.</h1>
+        <p>
+          Black, white, and gold. A focused scheduling flow that captures your profile, surfaces real-time availability from Square,
+          and pushes bookings straight to the Square calendar, payments, and loyalty.
+        </p>
         <div class="hero__cta">
-          <a class="btn btn--primary" href="#profile">Create your client profile</a>
-          <a class="btn btn--outline" href="#booking">Reserve appointment</a>
+          <a class="btn btn--primary" href="#booking">Reserve now</a>
+          <a class="btn btn--ghost" href="#services">View services</a>
         </div>
         <ul class="hero__stats">
-          <li><span>8</span> core injectable options</li>
-          <li><span>4</span> minute deposit capture</li>
-          <li><span>0</span> third-party redirects</li>
+          <li><span>Square</span>live availability + deposits</li>
+          <li><span>Resend</span>email confirmations throttled</li>
+          <li><span>Loyalty</span>auto-enrolled on account creation</li>
         </ul>
       </div>
-
       <div class="hero__panel">
         <div class="panel__orbit"></div>
         <div class="hero__panel-content">
-          <p class="eyebrow">Immersive flow</p>
-          <h3>Profile → Pick treatment → Secure deposit</h3>
-          <ol>
-            <li>Complete the client profile for secure storage.</li>
-            <li>Add treatments to your cart and pick a date + time.</li>
-            <li>Pay the ${{ deposit_amount }} per-treatment deposit via Square without leaving.</li>
-            <li>Instant confirmation and prep land in your inbox.</li>
-          </ol>
-          <p class="microcopy">Nurse-led, encrypted, and tuned for fast checkout.</p>
+          <p class="eyebrow">Modern square grid</p>
+          <h3>Clean, square edges with gold highlights</h3>
+          <p class="microcopy">
+            The interface uses black, white, and gold accents with crisp cards. Calendar availability pulls from Square; blocked days are
+            clearly dimmed.
+          </p>
+          <div class="pill-badges">
+            <span>Calendar sync</span>
+            <span>Loyalty + accounts</span>
+            <span>Square payments</span>
+          </div>
         </div>
       </div>
     </header>
 
     <main>
-      <!-- PROFILE SECTION (UNCHANGED) -->
       <section id="profile" class="section profile">
         <div>
-          <p class="eyebrow">Start here</p>
-          <h2>Build your GlowMedi client profile</h2>
-          <p>Tell us your goals...</p>
+          <p class="eyebrow">Account + loyalty</p>
+          <h2>Create your GlowMedi account</h2>
+          <p class="lead">
+            Store your details once, then book fast. Accounts create a Square customer, enroll you in loyalty, and save your booking
+            preferences.
+          </p>
           <ul class="checklist">
-            <li>Secure contact + goals intake</li>
-            <li>Fast-track to Square deposit</li>
-            <li>Custom reminders + aftercare</li>
+            <li>Customer record in Square</li>
+            <li>Automatic loyalty enrollment (phone-based)</li>
+            <li>Notes travel with every booking</li>
           </ul>
         </div>
 
-        <form id="profile-form" class="card glass">
-          <label for="profile-name">Full name</label>
-          <input id="profile-name" name="profile-name" type="text" placeholder="Your name" required />
-          <label for="profile-email">Email</label>
-          <input id="profile-email" name="profile-email" type="email" placeholder="you@example.com" required />
-          <label for="profile-phone">Phone</label>
-          <input id="profile-phone" name="profile-phone" type="tel" placeholder="(313) 555-1234" required />
-          <label for="profile-goal">Treatment focus</label>
-          <textarea id="profile-goal" name="profile-goal" placeholder="Lip balance..." rows="3"></textarea>
-          <button class="btn btn--primary" type="submit">Save profile</button>
-          <p id="profile-success" class="microcopy" aria-live="polite"></p>
-        </form>
+        <div class="profile-grid">
+          <form id="profile-form" class="card glass">
+            <h3>Account details</h3>
+            <label for="profile-name">Full name</label>
+            <input id="profile-name" name="profile-name" type="text" placeholder="Your name" required />
+            <label for="profile-email">Email</label>
+            <input id="profile-email" name="profile-email" type="email" placeholder="you@example.com" required />
+            <label for="profile-phone">Phone</label>
+            <input id="profile-phone" name="profile-phone" type="tel" placeholder="(313) 555-1234" required />
+            <label for="profile-notes">Notes for the team</label>
+            <textarea id="profile-notes" name="profile-notes" placeholder="Goals, sensitivities, or timing notes" rows="3"></textarea>
+            <button class="btn btn--primary" type="submit">Save + enroll</button>
+            <p id="profile-success" class="microcopy" aria-live="polite"></p>
+          </form>
+
+          <div class="card loyalty-card">
+            <div class="loyalty-header">
+              <div>
+                <p class="eyebrow">GlowMedi Rewards</p>
+                <h3>Points & perks</h3>
+              </div>
+              <span class="loyalty-pill">Square Loyalty</span>
+            </div>
+            <p class="microcopy">Accounts auto-enroll into the Square loyalty program; track rewards on future visits.</p>
+            <form id="loyalty-form">
+              <label for="loyalty-phone">Confirm phone</label>
+              <input id="loyalty-phone" name="loyalty-phone" type="tel" placeholder="(313) 555-1234" required />
+              <button class="btn btn--outline" type="submit">Sync loyalty</button>
+              <p id="loyalty-status" class="microcopy" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
       </section>
 
-      <!-- SERVICES SECTION (UNCHANGED) -->
       <section id="services" class="section services">
         <div class="section__header">
           <p class="eyebrow">Ritual index</p>
-          <h2>Pick your treatment</h2>
-          <p>Botox, filler, PRP, and quick peels without jargon.</p>
+          <h2>Select treatments</h2>
+          <p>Square-backed pricing with quick add-to-cart controls. Each item adds a ${{ deposit_amount }} deposit.</p>
         </div>
 
         <div class="service-tabs">
@@ -137,14 +154,14 @@
         </div>
       </section>
 
-      <!-- FLOW + PROVIDERS (UNCHANGED FOR SPACE) -->
-
-      <!-- BOOKING SECTION -->
       <section id="booking" class="section booking">
         <div class="booking__intro">
-          <p class="eyebrow">Reserve now</p>
-          <h2>Secure your GlowMedi appointment</h2>
-          <p>Add your treatments, pick an open slot, and place a ${{ deposit_amount }} deposit per service.</p>
+          <p class="eyebrow">Reserve</p>
+          <h2>Square calendar booking</h2>
+          <p class="lead">
+            Pick a day, click an available time, and place a ${{ deposit_amount }} deposit per service. All bookings and payments push to
+            Square so the calendar stays in sync.
+          </p>
           <div class="contact-grid">
             <a href="mailto:concierge@glowmedi.clinic">concierge@glowmedi.clinic</a>
             <a href="tel:+13138883057">(313) 888-3057</a>
@@ -153,49 +170,55 @@
         </div>
 
         <div class="card glass payment-card">
-          <h3>Cart, calendar, and deposit</h3>
-          <p>Lock in your date and time, then pay a ${{ deposit_amount }} deposit for each treatment.</p>
-
           <div class="booking-grid">
-            <!-- CART PANEL -->
             <div class="cart-panel">
               <div class="cart-header">
-                <h4>Cart</h4>
-                <p class="microcopy">Add treatments from above.</p>
+                <h3>Cart</h3>
+                <p class="microcopy">Deposit: ${{ deposit_amount }} per treatment.</p>
               </div>
               <ul id="cart-items" class="cart-list"></ul>
-              <p id="empty-cart" class="microcopy">Your cart is empty.</p>
+              <p id="empty-cart" class="microcopy">Add services to start.</p>
               <div class="cart-total">
                 <span>Deposit due</span>
                 <strong id="deposit-total">${{ deposit_amount }}.00</strong>
               </div>
             </div>
 
-            <!-- PAYMENT FORM -->
+            <div class="calendar-card">
+              <div class="calendar-header">
+                <div>
+                  <p class="eyebrow">Live availability</p>
+                  <h3 id="calendar-title">Month</h3>
+                  <p id="availability-source" class="microcopy">Syncing…</p>
+                </div>
+                <div class="calendar-nav">
+                  <button type="button" id="prev-month" aria-label="Previous month">‹</button>
+                  <button type="button" id="next-month" aria-label="Next month">›</button>
+                </div>
+              </div>
+              <div class="calendar-grid" id="calendar-grid"></div>
+              <div class="time-slot-wrap">
+                <h4>Times</h4>
+                <div id="time-slots" class="time-slot-grid"></div>
+              </div>
+            </div>
+
             <form id="deposit-form"
               data-deposit-cents="{{ deposit_amount * 100 }}"
               data-deposit-display="{{ deposit_amount }}"
               data-square-app="{{ square_application_id }}"
               data-square-location="{{ square_location_id }}"
+              class="payment-form"
             >
-
               <div class="availability-grid">
                 <div>
                   <label for="appointment-date">Appointment date</label>
-                  <input id="appointment-date" name="appointment-date" type="date" required />
+                  <input id="appointment-date" name="appointment-date" type="text" readonly required />
                 </div>
                 <div>
                   <label for="appointment-time">Preferred time</label>
-                  <input id="appointment-time" name="appointment-time" type="time" required />
+                  <input id="appointment-time" name="appointment-time" type="text" readonly required />
                 </div>
-              </div>
-
-              <div class="calendar-panel">
-                <div class="calendar-header">
-                  <h4>Available appointments</h4>
-                  <p class="microcopy">Slots sync from Square.</p>
-                </div>
-                <div id="availability-list" class="availability-list"></div>
               </div>
 
               <label for="guest-name">Guest name</label>
@@ -207,22 +230,24 @@
               <label for="guest-phone">Phone</label>
               <input id="guest-phone" name="guest-phone" type="tel" required />
 
-              <!-- ⭐ COUPON FIELD ADDED HERE -->
+              <label for="note">Notes</label>
+              <textarea id="note" name="note" rows="2" placeholder="Allergies, goals, or timing preferences"></textarea>
+
               <label for="coupon-code">Coupon code</label>
-              <input id="coupon-code" name="coupon-code" type="text" placeholder="Enter code to waive deposit"/>
+              <input id="coupon-code" name="coupon-code" type="text" placeholder="Waive deposit (pre-authorized)" />
 
-              <!-- ⭐ FREE BOOKING BUTTON -->
-              <button id="free-confirm" class="btn btn--primary" type="button" style="display:none;background:#34d17b;margin-top:1rem;">
-                Confirm without deposit
-              </button>
+              <div class="card-element-wrap">
+                <label>Card details</label>
+                <div id="card-element" class="card-element"></div>
+              </div>
 
-              <label>Card details</label>
-              <div id="card-element" class="card-element"></div>
-
-              <button class="btn btn--primary" id="card-button" type="submit">Pay deposit</button>
+              <div class="action-row">
+                <button class="btn btn--primary" id="card-button" type="submit">Pay deposit</button>
+                <button id="free-confirm" class="btn btn--ghost" type="button" style="display:none">Confirm without deposit</button>
+              </div>
 
               <p id="card-errors"></p>
-              <p class="microcopy">Instant receipts sent automatically.</p>
+              <p class="microcopy">Square payments stay on the Square dashboard. Resend emails are throttled to 2 req/sec.</p>
             </form>
           </div>
         </div>
@@ -230,14 +255,14 @@
     </main>
 
     <footer>
-      <p>GlowMedi · Botox, filler, PRP.</p>
-      <p>Follow @glowmedi.</p>
+      <p>GlowMedi · Botox, filler, PRP · Square-synced bookings</p>
+      <p>Follow @glowmedi</p>
     </footer>
 
     <script src="{{ square_js_src }}" defer></script>
-
-    <!-- ⭐ SCRIPT ADDITIONS BELOW -->
     <script>
+      const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
+
       /***********************
        TAB SWITCHING
       ************************/
@@ -245,45 +270,40 @@
       const tabPanels={injectables:document.getElementById('panel-injectables'),prp:document.getElementById('panel-prp'),peels:document.getElementById('panel-peels')};
       tabButtons.forEach(btn=>{btn.addEventListener('click',()=>{tabButtons.forEach(b=>b.classList.remove('is-active'));btn.classList.add('is-active');Object.values(tabPanels).forEach(p=>p.classList.add('is-hidden'));tabPanels[btn.dataset.panel].classList.remove('is-hidden');});});
 
-      /***********************
-       PROFILE SAVE
-      ************************/
-      const profileForm=document.getElementById('profile-form');
-      if(profileForm){
-        profileForm.addEventListener('submit',e=>{
-          e.preventDefault();
-          document.getElementById('profile-success').textContent='Profile captured.';
-          profileForm.reset();
-        });
-      }
-
-      /***********************
-       INITIALIZE BOOKING
-      ************************/
-      const initializeSquare=async()=>{
+      document.addEventListener('DOMContentLoaded',()=>{
         const depositForm=document.getElementById('deposit-form');
+        if(!depositForm)return;
+
         const cartList=document.getElementById('cart-items');
         const emptyCart=document.getElementById('empty-cart');
         const depositTotal=document.getElementById('deposit-total');
         const addToCartButtons=document.querySelectorAll('.add-to-cart');
-        const availabilityList=document.getElementById('availability-list');
+        const cartBadge=document.getElementById('cart-count-badge');
         const appointmentDateInput=document.getElementById('appointment-date');
         const appointmentTimeInput=document.getElementById('appointment-time');
-        const cartBadge=document.getElementById('cart-count-badge');
-
-        if(!depositForm)return;
+        const calendarGrid=document.getElementById('calendar-grid');
+        const calendarTitle=document.getElementById('calendar-title');
+        const availabilitySource=document.getElementById('availability-source');
+        const timeSlotsWrap=document.getElementById('time-slots');
+        const prevMonthBtn=document.getElementById('prev-month');
+        const nextMonthBtn=document.getElementById('next-month');
+        const loyaltyStatus=document.getElementById('loyalty-status');
+        const profileSuccess=document.getElementById('profile-success');
 
         const depositPerItemCents=parseInt(depositForm.dataset.depositCents,10)||0;
         const depositPerItemDisplay=parseFloat(depositForm.dataset.depositDisplay||'0');
         const cart=[];
+        let payments,card;
+        let availability={};
+        let availabilitySourceLabel='';
+        let currentMonth=new Date();
+        let selectedDate=null;
+        let selectedTime=null;
+        let customerId=localStorage.getItem('glowCustomerId')||null;
 
-        /* --------- UPDATE CART BADGE --------- */
-        function updateBadge(){
-          cartBadge.textContent=cart.reduce((s,i)=>s+i.quantity,0);
-        }
+        function updateBadge(){cartBadge.textContent=cart.reduce((s,i)=>s+i.quantity,0);}
 
-        /* --------- RENDER CART --------- */
-        const renderCart=()=>{
+        function renderCart(){
           cartList.innerHTML='';
           if(!cart.length){
             emptyCart.style.display='block';
@@ -310,162 +330,171 @@
           const totalQty=cart.reduce((s,i)=>s+i.quantity,0);
           depositTotal.textContent=`$${(totalQty*depositPerItemDisplay).toFixed(2)}`;
           updateBadge();
-        };
+        }
 
-        /* --------- ADD TO CART --------- */
-        addToCartButtons.forEach(btn=>{
-          btn.addEventListener('click',()=>{
-            const n=btn.dataset.name;
-            const e=cart.find(i=>i.name===n);
-            if(e){e.quantity++;}else{cart.push({name:n,quantity:1});}
-            renderCart();
-          });
-        });
+        addToCartButtons.forEach(btn=>{btn.addEventListener('click',()=>{const n=btn.dataset.name;const e=cart.find(i=>i.name===n);if(e){e.quantity++;}else{cart.push({name:n,quantity:1});}renderCart();});});
 
-        /* -------- CART ACTIONS -------- */
         cartList.addEventListener('click',e=>{
-          if(e.target.classList.contains('remove-item')){
-            cart.splice(parseInt(e.target.dataset.index,10),1);
-            renderCart();
-          }
-          if(e.target.classList.contains('qty-btn')){
-            const i=parseInt(e.target.dataset.index,10);
-            if(e.target.dataset.action==='increase')cart[i].quantity++;
-            if(e.target.dataset.action==='decrease'&&cart[i].quantity>1)cart[i].quantity--;
-            renderCart();
-          }
+          if(e.target.classList.contains('remove-item')){cart.splice(parseInt(e.target.dataset.index,10),1);renderCart();}
+          if(e.target.classList.contains('qty-btn')){const i=parseInt(e.target.dataset.index,10);if(e.target.dataset.action==='increase')cart[i].quantity++;if(e.target.dataset.action==='decrease'&&cart[i].quantity>1)cart[i].quantity--;renderCart();}
         });
 
-        /* --------- LOAD AVAILABILITY --------- */
         async function loadAvailability(){
+          availabilitySource.textContent='Syncing with Square…';
           try{
             const r=await fetch('/availability');
             const d=await r.json();
-            const availability=d.availability||{};
-            availabilityList.innerHTML='';
-            Object.keys(availability).forEach(day=>{
-              const col=document.createElement('div');
-              col.className='availability-day';
-              const h=document.createElement('div');
-              h.className='availability-day__header';
-              h.innerHTML=`<strong>${new Date(day).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})}</strong>`;
-              col.appendChild(h);
-              const grid=document.createElement('div');
-              grid.className='time-grid';
-              availability[day].forEach(time=>{
-                const b=document.createElement('button');
-                b.type='button';
-                b.className='time-slot';
-                b.textContent=time;
-                b.addEventListener('click',()=>{
-                  appointmentDateInput.value=day;
-                  appointmentTimeInput.value=time;
-                  document.querySelectorAll('.time-slot').forEach(x=>x.classList.remove('is-selected'));
-                  b.classList.add('is-selected');
-                });
-                grid.appendChild(b);
-              });
-              col.appendChild(grid);
-              availabilityList.appendChild(col);
-            });
-          }catch{}
+            availability=d.availability||{};
+            availabilitySourceLabel=d.source==='square'?'Live from Square calendar':'Offline template';
+            availabilitySource.textContent=availabilitySourceLabel;
+            renderCalendar();
+          }catch(err){
+            availabilitySource.textContent='Unable to sync availability';
+          }
         }
-        loadAvailability();
 
-        /**************
-         PAYMENT + COUPON
-        ***************/
+        function renderCalendar(){
+          calendarGrid.innerHTML='';
+          const year=currentMonth.getFullYear();
+          const month=currentMonth.getMonth();
+          const firstDay=new Date(year,month,1);
+          const startDay=firstDay.getDay();
+          const daysInMonth=new Date(year,month+1,0).getDate();
+          calendarTitle.textContent=`${monthNames[month]} ${year}`;
+
+          for(let i=0;i<startDay;i++){
+            const filler=document.createElement('div');
+            filler.className='calendar-cell filler';
+            calendarGrid.appendChild(filler);
+          }
+
+          for(let day=1;day<=daysInMonth;day++){
+            const dateObj=new Date(year,month,day);
+            const iso=dateObj.toISOString().split('T')[0];
+            const hasSlots=Array.isArray(availability[iso])&&availability[iso].length>0;
+            const cell=document.createElement('button');
+            cell.type='button';
+            cell.className='calendar-cell';
+            if(hasSlots)cell.classList.add('has-slots');
+            cell.textContent=day;
+            if(selectedDate===iso)cell.classList.add('is-selected');
+            cell.addEventListener('click',()=>{selectedDate=iso;appointmentDateInput.value=iso;document.querySelectorAll('.calendar-cell').forEach(c=>c.classList.remove('is-selected'));cell.classList.add('is-selected');renderTimes(iso);});
+            calendarGrid.appendChild(cell);
+          }
+        }
+
+        function renderTimes(dateKey){
+          timeSlotsWrap.innerHTML='';
+          const slots=availability[dateKey]||[];
+          if(!slots.length){
+            timeSlotsWrap.innerHTML='<p class="microcopy">No availability for this day.</p>';
+            appointmentTimeInput.value='';
+            return;
+          }
+          slots.forEach(time=>{
+            const b=document.createElement('button');
+            b.type='button';
+            b.className='time-slot';
+            b.textContent=time;
+            if(selectedTime===time)b.classList.add('is-selected');
+            b.addEventListener('click',()=>{selectedTime=time;appointmentTimeInput.value=time;document.querySelectorAll('.time-slot').forEach(x=>x.classList.remove('is-selected'));b.classList.add('is-selected');});
+            timeSlotsWrap.appendChild(b);
+          });
+        }
+
+        prevMonthBtn.addEventListener('click',()=>{currentMonth.setMonth(currentMonth.getMonth()-1);renderCalendar();});
+        nextMonthBtn.addEventListener('click',()=>{currentMonth.setMonth(currentMonth.getMonth()+1);renderCalendar();});
+
+        /* Profile + loyalty */
+        const profileForm=document.getElementById('profile-form');
+        profileForm?.addEventListener('submit',async e=>{
+          e.preventDefault();
+          profileSuccess.textContent='Saving…';
+          const payload={name:profileForm['profile-name'].value,email:profileForm['profile-email'].value,phone:profileForm['profile-phone'].value,notes:profileForm['profile-notes'].value};
+          const r=await fetch('/accounts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+          const data=await r.json();
+          if(!r.ok){profileSuccess.textContent=data.error||'Unable to save';return;}
+          if(data.customerId){customerId=data.customerId;localStorage.setItem('glowCustomerId',data.customerId);} 
+          profileSuccess.textContent='Profile saved to Square and loyalty synced.';
+          document.getElementById('guest-name').value=payload.name;
+          document.getElementById('guest-email').value=payload.email;
+          document.getElementById('guest-phone').value=payload.phone;
+          profileForm.reset();
+        });
+
+        const loyaltyForm=document.getElementById('loyalty-form');
+        loyaltyForm?.addEventListener('submit',async e=>{
+          e.preventDefault();
+          loyaltyStatus.textContent='Enrolling…';
+          const phone=loyaltyForm['loyalty-phone'].value;
+          const r=await fetch('/loyalty',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerId:customerId,phone})});
+          const data=await r.json();
+          if(!r.ok){loyaltyStatus.textContent=data.error||'Enrollment failed';return;}
+          loyaltyStatus.textContent='Loyalty synced to Square';
+          loyaltyForm.reset();
+        });
+
+        /* Payments */
         const cardErrors=document.getElementById('card-errors');
         const couponInput=document.getElementById('coupon-code');
         const freeBtn=document.getElementById('free-confirm');
         const appId=depositForm.dataset.squareApp.trim();
         const locationId=depositForm.dataset.squareLocation.trim();
 
-        let payments,card;
-
-        /* Initialize Square */
-        if(window.Square && appId && locationId && !appId.includes('placeholder')){
-          try{
-            payments=window.Square.payments(appId,locationId);
-            card=await payments.card();
-            await card.attach('#card-element');
-          }catch(err){
-            cardErrors.textContent=err.message;
+        async function initSquareCard(){
+          if(window.Square && appId && locationId && !appId.includes('placeholder')){
+            try{payments=window.Square.payments(appId,locationId);card=await payments.card();await card.attach('#card-element');}catch(err){cardErrors.textContent=err.message;}
+          } else {
+            cardErrors.textContent='Square card UI not configured';
           }
         }
+        initSquareCard();
 
-        /* ------- COUPON LOGIC ------- */
         couponInput.addEventListener('input',()=>{
           const code=couponInput.value.trim().toUpperCase();
-
-          if(code.length>0){
-            // hide card, show free confirm
-            document.getElementById('card-element').style.display='none';
-            document.getElementById('card-button').style.display='none';
-            freeBtn.style.display='block';
-            depositTotal.textContent='$0.00';
-          }else{
-            // show card
-            document.getElementById('card-element').style.display='block';
-            document.getElementById('card-button').style.display='inline-flex';
-            freeBtn.style.display='none';
-            renderCart();
-          }
+          if(code.length>0){document.getElementById('card-element').style.display='none';document.getElementById('card-button').style.display='none';freeBtn.style.display='inline-flex';depositTotal.textContent='$0.00';}
+          else{document.getElementById('card-element').style.display='block';document.getElementById('card-button').style.display='inline-flex';freeBtn.style.display='none';renderCart();}
         });
 
-        /* ------- FREE BOOKING BUTTON ------- */
-        freeBtn.addEventListener('click',async()=>{
-          if(!cart.length){
-            cardErrors.textContent='Add at least one treatment first.';
-            return;
+        freeBtn.addEventListener('click',()=>handleBooking({skipPayment:true}));
+        depositForm.addEventListener('submit',e=>{e.preventDefault();handleBooking({skipPayment:false});});
+
+        async function handleBooking({skipPayment}){
+          cardErrors.textContent='';
+          if(!cart.length){cardErrors.textContent='Add at least one treatment first.';return;}
+          if(!appointmentDateInput.value||!appointmentTimeInput.value){cardErrors.textContent='Choose a date and time.';return;}
+
+          let token=null;
+          if(!skipPayment){
+            if(!card){cardErrors.textContent='Square card is unavailable.';return;}
+            const tokenResult=await card.tokenize();
+            if(tokenResult.status!=='OK'){cardErrors.textContent='Card error: '+(tokenResult.errors?.[0]?.message||'Try again');return;}
+            token=tokenResult.token;
           }
+
           const payload={
-            token:null,
+            token,
             coupon:couponInput.value.trim(),
             name:document.getElementById('guest-name').value,
             email:document.getElementById('guest-email').value,
             phone:document.getElementById('guest-phone').value,
             appointmentDate:appointmentDateInput.value,
             appointmentTime:appointmentTimeInput.value,
-            cart
+            cart,
+            note:document.getElementById('note').value,
+            customerId
           };
-          const r=await fetch('/process-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-          const data=await r.json();
-          if(!r.ok){cardErrors.textContent=data.error||'Error.';return;}
-          alert('Booking confirmed without deposit!');
-          window.location.reload();
-        });
 
-        /* ------- PAID CHECKOUT ------- */
-        depositForm.addEventListener('submit',async e=>{
-          e.preventDefault();
-          if(!cart.length)return cardErrors.textContent='Your cart is empty.';
-          const tokenResult=await card.tokenize();
-          if(tokenResult.status!=='OK'){
-            cardErrors.textContent='Card error: '+(tokenResult.errors?.[0]?.message||'Try again');
-            return;
-          }
-          const payload={
-            token:tokenResult.token,
-            coupon:couponInput.value.trim(),
-            name:document.getElementById('guest-name').value,
-            email:document.getElementById('guest-email').value,
-            phone:document.getElementById('guest-phone').value,
-            appointmentDate:appointmentDateInput.value,
-            appointmentTime:appointmentTimeInput.value,
-            cart
-          };
           const r=await fetch('/process-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
           const data=await r.json();
           if(!r.ok){cardErrors.textContent=data.error||'Payment failed.';return;}
-          alert('Deposit received. Confirmation on the way.');
+          alert('Booking confirmed and synced to Square.');
           window.location.reload();
-        });
+        }
 
         renderCart();
-      };
-
-      document.addEventListener('DOMContentLoaded',initializeSquare);
+        loadAvailability();
+      });
     </script>
   </body>
 </html>
