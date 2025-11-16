@@ -1,4 +1,4 @@
-# Glow Atelier FastAPI site
+# GlowMedi booking site
 
 Modern FastAPI + Jinja front-end tailored for PythonAnywhere deployments. It
 showcases Farah and Malak's cosmetic injectable, PRP, and peel offerings, and
@@ -55,7 +55,7 @@ handling.
      from main import app as application
      ```
    - Configure **Static files** mapping `/static/` → `/home/USERNAME/glow/static`.
-4. Reload the site in PythonAnywhere. You should see the Glow Atelier landing page
+4. Reload the site in PythonAnywhere. You should see the GlowMedi landing page
    with all data-driven cards.
 
 ## Content editing

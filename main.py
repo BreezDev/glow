@@ -1,6 +1,7 @@
 import json
 import os
 import uuid
+from datetime import date, timedelta
 from typing import Any, Dict, List
 
 from flask import Flask, jsonify, render_template, request
@@ -29,34 +30,50 @@ def build_app() -> Flask:
         app.config["SQUARE_JS_SRC"] = "https://sandbox.web.squarecdn.com/v1/square.js"
 
     injectables: List[Dict[str, str]] = [
-        {"name": "Botox with Farah", "price": "$9/unit", "duration": "15 min", "details": "Precise wrinkle relaxation"},
-        {"name": "Botox with Malak", "price": "$9/unit", "duration": "30 min", "details": "Express appointment"},
-        {"name": "Botox touch up", "price": "Complimentary", "duration": "10 min", "details": "2-week follow up with Farah or Malak"},
-        {"name": "Lip filler", "price": "$400", "duration": "45 min", "details": "Full, balanced volume"},
-        {"name": "Lip filler touch up", "price": "Existing clients", "duration": "10 min", "details": "Maintenance visit"},
-        {"name": "Lip Flip", "price": "$60+", "duration": "15 min", "details": "Botox lip definition"},
-        {"name": "Cheek filler", "price": "$400+", "duration": "45 min", "details": "Midface contour"},
-        {"name": "Jaw filler", "price": "$400+", "duration": "60 min", "details": "Snatched jawline"},
-        {"name": "Nose filler", "price": "$400+", "duration": "30 min", "details": "Non-surgical contour"},
-        {"name": "Nasolabial folds", "price": "$400+", "duration": "45 min", "details": "Laugh line softening"},
-        {"name": "Temple filler", "price": "$400", "duration": "30 min", "details": "Temple balance"},
-        {"name": "SkinVive", "price": "Custom", "duration": "30 min", "details": "Juvederm glow"},
-        {"name": "Kybella", "price": "Consult", "duration": "60 min", "details": "Targeted fat reduction"},
-        {"name": "Sculptra", "price": "$550+", "duration": "60 min", "details": "Collagen biostimulator"},
-        {"name": "Kenalog injections", "price": "Consult", "duration": "15 min", "details": "Inflammation control"},
+        {"name": "Botox smooth", "price": "$9/unit", "duration": "15 min", "details": "Quick wrinkle softening"},
+        {"name": "Botox refresh", "price": "$9/unit", "duration": "30 min", "details": "Balanced upper-face map"},
+        {"name": "Botox touch up", "price": "Complimentary", "duration": "10 min", "details": "2-week tweak"},
+        {"name": "Lip filler", "price": "$400", "duration": "45 min", "details": "Soft, even volume"},
+        {"name": "Lip flip", "price": "$60+", "duration": "15 min", "details": "Defined border"},
+        {"name": "Cheek filler", "price": "$400+", "duration": "45 min", "details": "Lifted midface"},
+        {"name": "Jaw filler", "price": "$400+", "duration": "60 min", "details": "Sharper line"},
+        {"name": "Nose filler", "price": "$400+", "duration": "30 min", "details": "Smoother bridge"},
+        {"name": "Nasolabial folds", "price": "$400+", "duration": "45 min", "details": "Softened smile lines"},
+        {"name": "Temple filler", "price": "$400", "duration": "30 min", "details": "Temple support"},
+        {"name": "SkinVive", "price": "Custom", "duration": "30 min", "details": "Skin hydration"},
+        {"name": "Kybella", "price": "Consult", "duration": "60 min", "details": "Chin contour"},
+        {"name": "Sculptra", "price": "$550+", "duration": "60 min", "details": "Collagen boost"},
     ]
 
     prp: List[Dict[str, str]] = [
-        {"name": "Vampire Facial (PRP)", "price": "$250/session", "duration": "60 min", "details": "Collagen-rich microneedling"},
-        {"name": "PRP under eyes", "price": "$150/session", "duration": "45 min", "details": "Brighten + thicken skin"},
-        {"name": "PRP hair restoration", "price": "$250/session", "duration": "60 min", "details": "Series-based protocol"},
-        {"name": "PRP restoration plan", "price": "Treatment schedule", "duration": "Multi-visit", "details": "6-week cadence packages"},
+        {"name": "PRP facial", "price": "$250/session", "duration": "60 min", "details": "Microneedling + PRP"},
+        {"name": "PRP under eyes", "price": "$150/session", "duration": "45 min", "details": "Brighten + thicken"},
+        {"name": "PRP hair restoration", "price": "$250/session", "duration": "60 min", "details": "Scalp stimulation"},
     ]
 
     peels: List[Dict[str, str]] = [
-        {"name": "Perfect Derma Peel", "price": "$175", "duration": "45 min", "details": "Medium-depth resurfacing"},
-        {"name": "Vampire Facial add-on", "price": "$250/session", "duration": "60 min", "details": "PRP-infused exfoliation"},
+        {"name": "Perfect Derma Peel", "price": "$175", "duration": "45 min", "details": "Refined glow"},
+        {"name": "Glow peel add-on", "price": "$125", "duration": "30 min", "details": "Fast exfoliation"},
     ]
+
+    def build_availability(days: int = 7) -> Dict[str, List[str]]:
+        schedule_env = os.getenv("STRIPE_AVAILABILITY_JSON")
+        if schedule_env:
+            try:
+                loaded = json.loads(schedule_env)
+                if isinstance(loaded, dict):
+                    return loaded
+            except json.JSONDecodeError:
+                pass
+
+        today = date.today()
+        daily_slots = ["09:00", "10:30", "12:00", "14:00", "15:30", "17:00"]
+        return {
+            (today + timedelta(days=offset)).isoformat(): daily_slots
+            for offset in range(days)
+        }
+
+    availability = build_availability()
 
     @app.get("/")
     def landing() -> str:
@@ -65,6 +82,7 @@ def build_app() -> Flask:
             injectables=injectables,
             prp=prp,
             peels=peels,
+            availability=availability,
             square_application_id=app.config["SQUARE_APPLICATION_ID"],
             square_location_id=app.config["SQUARE_LOCATION_ID"],
             square_js_src=app.config["SQUARE_JS_SRC"],
@@ -84,13 +102,13 @@ def build_app() -> Flask:
         if not api_key or not guest_email:
             return
 
-        subject = "Glow Atelier reservation confirmation"
+        subject = "GlowMedi reservation confirmation"
         line_items = "".join(
             f"<li>{item.get('name')} — Qty {item.get('quantity', 1)}</li>" for item in cart_items
         )
         html_body = f"""
             <p>Hi {guest_name or 'Glow guest'},</p>
-            <p>Thank you for reserving with Glow Atelier. We've captured your deposit and confirmed your requested slot.</p>
+            <p>Thank you for reserving with GlowMedi. We've captured your deposit and confirmed your requested slot.</p>
             <ul>
               <li><strong>Date</strong>: {appointment_date}</li>
               <li><strong>Time</strong>: {appointment_time}</li>
@@ -103,7 +121,7 @@ def build_app() -> Flask:
 
         body = json.dumps(
             {
-                "from": "Glow Atelier <bookings@glowatelier.com>",
+                "from": "GlowMedi <bookings@glowmedi.clinic>",
                 "to": [guest_email, "farah@glowmedi.clinic", "malak@glowmedi.clinic"],
                 "subject": subject,
                 "html": html_body,
@@ -212,7 +230,7 @@ def build_app() -> Flask:
             "source_id": token,
             "location_id": app.config["SQUARE_LOCATION_ID"],
             "autocomplete": True,
-            "note": "Glow Atelier reservation deposit",
+            "note": "GlowMedi reservation deposit",
             "order_id": order_id,
         }
         if buyer_email:
@@ -260,6 +278,10 @@ def build_app() -> Flask:
         errors = data.get("errors")
         message = errors[0].get("detail") if errors else "Payment failed."
         return jsonify({"error": message}), status_code
+
+    @app.get("/availability")
+    def availability_feed() -> Any:
+        return jsonify({"availability": availability})
 
     return app
 
