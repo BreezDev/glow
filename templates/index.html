@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Glow Atelier | Cosmetic Artistry by Farah & Malak</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__content">
+        <p class="eyebrow">Glow Atelier • Cosmetic Medicine</p>
+        <h1>Elevated injectable artistry by Farah &amp; Malak</h1>
+        <p>
+          Modern enhancements rooted in clinical expertise. Explore curated
+          treatment plans, reserve with Square, and receive elegant reminders via
+          Resend—all while we protect your privacy and consent.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn--primary" href="#booking">Reserve on Square</a>
+          <a class="btn btn--ghost" href="#treatments">Browse services</a>
+        </div>
+        <div class="hero__badges">
+          <span>Board-certified injectors</span>
+          <span>Square loyalty welcome</span>
+          <span>Photo consent optional</span>
+        </div>
+      </div>
+      <div class="hero__card">
+        <div class="hero__card-inner">
+          <p>Featured concierge plan</p>
+          <h3>Signature Glow</h3>
+          <ul>
+            <li>Full-face assessment with Farah</li>
+            <li>Strategic Botox + filler placement</li>
+            <li>SkinVive hydration boost</li>
+          </ul>
+          <p class="card-note">Avg. 90 minutes • Custom pricing</p>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="providers" class="panel panel--duo">
+        <article>
+          <p class="eyebrow">Lead provider</p>
+          <h2>Farah Kassim</h2>
+          <p>
+            Master injector and creative director. Farah oversees every
+            treatment protocol, offers advanced sculpting such as nose contouring,
+            and ensures meticulous aftercare.
+          </p>
+          <ul>
+            <li>Precision Botox mapping</li>
+            <li>Custom filler harmonization</li>
+            <li>Personalized maintenance schedule</li>
+          </ul>
+        </article>
+        <article>
+          <p class="eyebrow">Senior provider</p>
+          <h2>Malak Rahim</h2>
+          <p>
+            Malak delivers seamless Botox touch ups, PRP regeneration plans, and
+            confidence-boosting lip transformations tailored to your goals.
+          </p>
+          <ul>
+            <li>Subtle lip flips and lip filler</li>
+            <li>PRP under-eye + hair restoration</li>
+            <li>Holistic maintenance coaching</li>
+          </ul>
+        </article>
+      </section>
+
+      <section id="treatments" class="section">
+        <div class="section__header">
+          <p class="eyebrow">Immersive menu</p>
+          <h2>Select your artistry</h2>
+          <p>
+            Every reservation begins with a digital intake, deposit via Square,
+            and optional consent for before/after photography.
+          </p>
+        </div>
+        <div class="tabs">
+          <button class="tab is-active" data-target="injectables">
+            Injectables
+          </button>
+          <button class="tab" data-target="prp">PRP Rituals</button>
+          <button class="tab" data-target="peels">Peels &amp; Skin</button>
+        </div>
+        <div class="grid" id="injectables">
+          {% for item in injectables %}
+          <article class="card">
+            <div>
+              <p class="card__title">{{ item.name }}</p>
+              <p class="card__subtitle">{{ item.details }}</p>
+            </div>
+            <div class="card__meta">
+              <span>{{ item.price }}</span>
+              <span>{{ item.duration }}</span>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+        <div class="grid is-hidden" id="prp">
+          {% for item in prp %}
+          <article class="card">
+            <div>
+              <p class="card__title">{{ item.name }}</p>
+              <p class="card__subtitle">{{ item.details }}</p>
+            </div>
+            <div class="card__meta">
+              <span>{{ item.price }}</span>
+              <span>{{ item.duration }}</span>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+        <div class="grid is-hidden" id="peels">
+          {% for item in peels %}
+          <article class="card">
+            <div>
+              <p class="card__title">{{ item.name }}</p>
+              <p class="card__subtitle">{{ item.details }}</p>
+            </div>
+            <div class="card__meta">
+              <span>{{ item.price }}</span>
+              <span>{{ item.duration }}</span>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="section timeline">
+        <div class="section__header">
+          <p class="eyebrow">Your booking flow</p>
+          <h2>Polished from deposit to glow</h2>
+        </div>
+        <ol>
+          <li>
+            <h3>Reserve</h3>
+            <p>
+              Use our Square booking calendar to choose Farah or Malak, secure
+              your deposit, and automatically earn loyalty points.
+            </p>
+          </li>
+          <li>
+            <h3>Consent &amp; prep</h3>
+            <p>
+              Receive a Resend email packet with digital intake forms, optional
+              photo consent, and tailored prep instructions.
+            </p>
+          </li>
+          <li>
+            <h3>Treatment day</h3>
+            <p>
+              Luxurious treatment suite with aromatherapy, sterile protocols, and
+              a quiet playlist so you can fully relax.
+            </p>
+          </li>
+          <li>
+            <h3>Aftercare</h3>
+            <p>
+              Follow-up reminders arrive via Resend with healing tips, touch-up
+              eligibility, and loyalty incentives for your next glow.
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="booking" class="panel panel--cta">
+        <div>
+          <p class="eyebrow">Ready to reserve?</p>
+          <h2>Book with Square in seconds</h2>
+          <p>
+            Secure your preferred date, manage deposits, and enroll in loyalty
+            with one elegant checkout. We'll confirm within 24 hours.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn--primary" href="https://squareup.com/appointments" target="_blank" rel="noreferrer"
+              >Open booking calendar</a
+            >
+            <a class="btn btn--ghost" href="mailto:hello@glowatelier.com"
+              >Email concierge</a
+            >
+          </div>
+          <div class="consent">
+            <p>
+              Need privacy? Simply toggle "No photos" inside the intake form.
+              We only capture imagery with explicit consent.
+            </p>
+          </div>
+        </div>
+        <div class="card glass">
+          <h3>Concierge checklist</h3>
+          <ul>
+            <li>Square deposit link</li>
+            <li>Automations via Resend</li>
+            <li>Photo consent record</li>
+            <li>Skin prep + aftercare PDFs</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Glow Atelier • Toronto • hello@glowatelier.com • (416) 555-0147</p>
+      <p>Follow @glowatelier on Instagram for treatment reveals.</p>
+    </footer>
+
+    <script>
+      const tabs = document.querySelectorAll('.tab');
+      const grids = {
+        injectables: document.getElementById('injectables'),
+        prp: document.getElementById('prp'),
+        peels: document.getElementById('peels')
+      };
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          tabs.forEach((t) => t.classList.remove('is-active'));
+          tab.classList.add('is-active');
+
+          Object.values(grids).forEach((grid) => grid.classList.add('is-hidden'));
+          grids[tab.dataset.target].classList.remove('is-hidden');
+        });
+      });
+    </script>
+  </body>
+</html>
